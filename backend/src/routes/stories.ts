@@ -26,6 +26,11 @@ router.post('/', (req, res) => { // Add new Folder
   res.json(newStoryEntry)
 })
 
+router.delete('/', (req, _) => { // Delete folder
+  const { name } = req.body
+  folderServices.deleteFolderByName(name)
+})
+
 router.post('/:folder', (req, res) => { // Add new story
   const { content } = req.body
   const newStoryEntry = storyServices.addStory(content)

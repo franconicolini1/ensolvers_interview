@@ -18,3 +18,7 @@ export const addFolder = async (name: string): Promise<any> => {
   }
   return true
 }
+
+export const deleteFolderByName = (name: string): void => {
+  FolderModel.destroy({ where: { name } })
+}
