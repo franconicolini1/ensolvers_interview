@@ -1,6 +1,6 @@
 export interface Story {
-  id: number
-  checked: boolean
+  id: string
+  isChecked: boolean
   content: string
 }
 

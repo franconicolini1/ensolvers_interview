@@ -1,16 +1,16 @@
-import { newStory, Story } from '../types'
+import { Story } from '../types'
 import { v4 as uuidv4 } from 'uuid'
 import { StoryModel } from '../../models/Stories'
 
-export const getAllStories = async (): Promise<any> => {
-  const data = await StoryModel.findAll() // REVISAR as unknown as StoryEntry
+export const getAllStoriesFromFolder = async (folder: string): Promise<any> => { // FIJARSE
+  const data = await StoryModel.findAll({ where: { folder } })
   return data
 }
 
 export const editStory = async (story: Story): Promise<any> => {
   await StoryModel.update({
     content: story.content,
-    checked: story.checked
+    isChecked: story.isChecked
   }, {
     where: {
       id: story.id
@@ -18,12 +18,12 @@ export const editStory = async (story: Story): Promise<any> => {
   })
 }
 
-export const addStory = async (newStory: newStory): Promise<any> => {
+export const addStory = async (content: string): Promise<any> => {
   const newID = uuidv4()
   const story = await StoryModel.create({
     id: newID,
-    content: newStory.content,
-    checked: newStory.checked
+    content,
+    isChecked: false
   })
 
   if (story == null) {
