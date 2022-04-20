@@ -6,20 +6,25 @@ const Folder = ({ folder, deleteFolder }) => {
 
   return (
     <>
-      <li className="list-group-item" key={folder.id}>
+      <li
+        className="list-group-item d-flex justify-content-between align-items-center"
+        key={folder.id}
+      >
         {folder.name}
-        <button
-          className="btn btn-primary float-end"
-          onClick={navigate(`/api/stories/${folder.id}`)}
-        >
-          View Items
-        </button>
-        <button
-          className="btn btn-danger float-end"
-          onClick={() => deleteFolder(folder.id)}
-        >
-          Remove
-        </button>
+        <div>
+          <button
+            className="btn btn-info float-end ml-3 my-1"
+            onClick={() => navigate(`/api/stories/${folder.id}`)}
+          >
+            View Items
+          </button>
+          <button
+            className="btn btn-danger float-end mx-3 my-1"
+            onClick={() => deleteFolder(folder.id)}
+          >
+            Remove
+          </button>
+        </div>
       </li>
     </>
   );

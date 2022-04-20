@@ -1,7 +1,7 @@
-export interface Story {
+export interface Task {
   id: string
   isChecked: boolean
   content: string
 }
 
-export type newStory = Omit<Story, 'id'>
+export type newTask = Omit<Task, 'id'>

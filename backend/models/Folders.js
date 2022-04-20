@@ -11,6 +11,7 @@ export const FolderModel = db.define('Folder', {
     type: DataTypes.STRING,
     unique: {
       msg: 'Name already used'
-    }
+    },
+    allowNull: false
   }
 })

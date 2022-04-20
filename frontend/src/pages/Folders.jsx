@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import Folder from "../components/Folder";
 
 function Folders() {
-  const [folders, setFolders] = useState({});
+  const [folders, setFolders] = useState([]);
   const [newFolderName, setNewFolderName] = useState("");
   const [error, setError] = useState("");
 
@@ -25,14 +25,30 @@ function Folders() {
     getFolders();
   }, []);
 
+  const alreadyExists = async () => {
+    let exists = false;
+    folders.forEach((folder) => {
+      if (folder.name === newFolderName) {
+        exists = true;
+      }
+      return folder.name;
+    });
+    return exists;
+  };
+
   const createFolder = async (e) => {
     e.preventDefault();
 
     if (!newFolderName.trim()) return setError("Folder must have a name");
 
+    const exists = await alreadyExists();
+    if (exists) {
+      return setError(`Folder with name ${newFolderName} already exists`);
+    }
+
     try {
       await axios.post("http://localhost:3001/api/stories", {
-        data: newFolderName,
+        name: newFolderName,
       });
       await getFolders();
     } catch (e) {
@@ -43,10 +59,12 @@ function Folders() {
     setError("");
   };
 
-  const deleteFolder = async (name) => {
-    axios.delete("http://localhost:3001/api/stories", {
-      data: name,
+  const deleteFolder = (id) => {
+    axios.delete(`http://localhost:3001/api/stories/${id}`, {
+      id,
     });
+
+    getFolders();
   };
 
   return (
@@ -61,7 +79,11 @@ function Folders() {
             <ul className="list-group mt-4">
               {folders.length ? (
                 folders.map((folder) => (
-                  <Folder folder={folder} deleteFolder={deleteFolder}></Folder>
+                  <Folder
+                    key={folder.id}
+                    folder={folder}
+                    deleteFolder={deleteFolder}
+                  ></Folder>
                 ))
               ) : (
                 <li className="list-group-item my-1">
@@ -80,7 +102,7 @@ function Folders() {
               />
               <input
                 type="submit"
-                className="btn btn-primary ml-4 w-25"
+                className="btn btn-info ml-4 w-25"
                 onClick={(e) => createFolder(e)}
                 value="Add Folder"
               />

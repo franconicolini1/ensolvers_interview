@@ -2,7 +2,7 @@ import db from '../config/db.js'
 import { DataTypes } from 'sequelize'
 import { FolderModel } from './Folders'
 
-export const StoryModel = db.define('Story', {
+export const TaskModel = db.define('Task', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -26,4 +26,4 @@ export const StoryModel = db.define('Story', {
   }
 })
 
-StoryModel.belongsTo(FolderModel)
+TaskModel.belongsTo(FolderModel)

@@ -5,7 +5,7 @@ import Task from "../components/Task";
 import { useParams } from "react-router-dom";
 
 function Tasks() {
-  const [Tasks, setTasks] = useState({});
+  const [Tasks, setTasks] = useState([]);
   const [newTaskName, setNewTaskName] = useState("");
   const [error, setError] = useState("");
   const { folder } = useParams();
