@@ -20,7 +20,7 @@ export const TaskModel = db.define('Task', {
       msg: 'Content already used'
     }
   },
-  checked: {
+  isChecked: {
     type: DataTypes.BOOLEAN,
     allowNull: false
   }

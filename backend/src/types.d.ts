@@ -1,7 +1,8 @@
 export interface Task {
-  id: string
+  id: number
   isChecked: boolean
   content: string
+  FolderId: number
 }
 
 export type newTask = Omit<Task, 'id'>

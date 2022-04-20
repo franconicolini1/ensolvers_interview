@@ -11,7 +11,9 @@ function Folders() {
   const getFolders = async () => {
     axios
       .get("http://localhost:3001/api/stories")
-      .then((res) => setFolders(res.data))
+      .then((res) =>
+        Object.keys(res.data).length > 0 ? setFolders(res.data) : setFolders([])
+      )
       .catch((e) => console.log(e));
   };
 
@@ -19,7 +21,11 @@ function Folders() {
     const getFolders = async () => {
       axios
         .get("http://localhost:3001/api/stories")
-        .then((res) => setFolders(res.data))
+        .then((res) =>
+          Object.keys(res.data).length > 0
+            ? setFolders(res.data)
+            : setFolders([])
+        ) // If it's empty folders will be equal to []
         .catch((e) => console.log(e));
     };
     getFolders();
@@ -31,7 +37,6 @@ function Folders() {
       if (folder.name === newFolderName) {
         exists = true;
       }
-      return folder.name;
     });
     return exists;
   };

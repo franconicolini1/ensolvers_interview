@@ -9,7 +9,10 @@ export const getAllFolders = (_: any, res: any): void => {
 }
 
 export const getAllFolderTasks = (req: any, res: any): void => {
-  res.send(taskServices.getAllTasksFromFolder(+req.params.folderID))
+  taskServices
+    .getAllTasksFromFolder(+req.params.FolderId)
+    .then((data: any) => res.send(data))
+    .catch((e: any) => console.log(e))
 }
 
 export const addNewFolder = (req: any, res: any): void => {
@@ -21,12 +24,18 @@ export const addNewFolder = (req: any, res: any): void => {
 }
 
 export const deleteFolderById = (req: any, _: any): void => {
-  folderServices.deleteFolderById(+req.params.id)
+  folderServices.deleteFolderById(+req.params.FolderId)
+  taskServices.deleteTask(+req.params.FolderId, null)
 }
 
 export const addNewTaskToFolder = (req: any, res: any): void => {
   const { content } = req.body
-  const newtaskEntry = taskServices.addTask(content)
+  const FolderId = req.params.FolderId
+  if (FolderId === null) {
+    return res.sendStatus(400)
+  }
+
+  const newtaskEntry = taskServices.addTask(FolderId, content)
 
   res.json(newtaskEntry)
 }

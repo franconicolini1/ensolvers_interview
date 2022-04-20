@@ -1,5 +1,5 @@
 import * as taskServices from '../services/tasks'
-import { strToBoolean } from '../utils'
+import { Task } from '../types'
 
 export const getTaskById = (req: any, res: any): void => {
   const task = taskServices.findById(req.params.id)
@@ -8,15 +8,24 @@ export const getTaskById = (req: any, res: any): void => {
 
 export const editTaskById = (req: any, res: any): void => {
   const { content, isChecked } = req.body
-  const id = req.params.id
+  const { taskId, FolderId } = req.params
+  console.log(isChecked)
 
   const task = {
     content,
-    isChecked: strToBoolean(isChecked),
-    id
-  }
+    isChecked,
+    id: taskId,
+    FolderId
+  } as unknown as Task
+
+  console.log(task.isChecked)
 
   taskServices.editTask(task)
     .then((ok) => res.send(ok))
-    .catch(() => res.sendStatus(400))
+    .catch((e) => console.log(e))
+}
+
+export const deleteTaskById = (req: any, _: any): void => {
+  const taskId = req.params.taskId
+  taskServices.deleteTask(null, taskId)
 }

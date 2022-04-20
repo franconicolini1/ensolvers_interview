@@ -1,4 +1,3 @@
-import "./App.css";
 //import LoginRouter from "./routes/LoginRouter";
 import AppRouter from "./routes/AppRouter";
 

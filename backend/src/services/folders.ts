@@ -1,4 +1,5 @@
 import { FolderModel } from '../../models/Folders'
+import { deleteTask } from './tasks'
 
 export const getAllFolders = async (): Promise<any> => {
   const data = await FolderModel.findAll()
@@ -17,5 +18,6 @@ export const addFolder = async (name: string): Promise<any> => {
 }
 
 export const deleteFolderById = (id: number): void => {
+  void deleteTask(id, null) // Delete all the tasks inside folder
   void FolderModel.destroy({ where: { id } })
 }

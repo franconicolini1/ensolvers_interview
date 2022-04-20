@@ -1,17 +1,18 @@
 import express from 'express'
 import { addNewFolder, getAllFolders, getAllFolderTasks, deleteFolderById, addNewTaskToFolder } from '../controllers/foldersController'
-import { editTaskById, getTaskById } from '../controllers/tasksController'
+import { editTaskById, getTaskById, deleteTaskById } from '../controllers/tasksController'
 
 const router = express.Router()
 
 router.get('/', getAllFolders)
 router.post('/', addNewFolder)
 
-router.get('/:folderID', getAllFolderTasks)
-router.post('/:folder', addNewTaskToFolder)
-router.delete('/:id', deleteFolderById)
+router.get('/:FolderId', getAllFolderTasks)
+router.post('/:FolderId', addNewTaskToFolder)
+router.delete('/:FolderId', deleteFolderById)
 
-router.get('/:folder/:id', getTaskById)
-router.post('/:folder/:id', editTaskById)
+router.get('/:FolderId/:taskId', getTaskById)
+router.post('/:FolderId/:taskId', editTaskById)
+router.delete('/:FolderId/:taskId', deleteTaskById)
 
 export default router
