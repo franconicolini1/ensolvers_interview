@@ -2,7 +2,7 @@
 
 ## Package Manager
 
-    I used npm
+    I used npm.
 
 ## Run App
 
