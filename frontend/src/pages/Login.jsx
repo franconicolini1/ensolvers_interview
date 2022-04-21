@@ -1,23 +1,21 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const MIN_PASS = 6;
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [msgError, setMsgError] = useState("");
-  const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const registerUser = (e) => {
-    setMsgError("");
+    setError("");
     if (pass.length < MIN_PASS)
-      return setMsgError("La contraseña debe tener 6 caracteres o mas");
+      return setError("Password must have 6 characters or more");
   };
 
   const loginUser = () => {
     if (!email.trim() || !pass.trim())
-      return setMsgError("Ambos campos deben estar llenos");
+      return setError("Both fields should be completed");
   };
 
   return (
@@ -29,20 +27,20 @@ const Login = () => {
           <input
             onChange={(e) => setEmail(e.target.value)}
             className="form-control w-100"
-            placeholder="Introduzca su email"
+            placeholder="example@email.com"
             type="email"
             value={email ? email : ""}
           />
           <input
             onChange={(e) => setPass(e.target.value)}
             className="form-control mt-4 w-100"
-            placeholder="Introduzca su contraseña"
+            placeholder="Password"
             type="password"
             value={pass ? pass : ""}
           />
           <input
             className="btn btn-dark btn-block mt-5 w-100"
-            value="Registrar Usuario"
+            value="Register User"
             type="button"
             onClick={(e) => registerUser(e)}
           />
@@ -51,13 +49,9 @@ const Login = () => {
           className="btn btn-success btn-block mt-1 w-100"
           onClick={loginUser}
         >
-          Iniciar sesión
+          Log In
         </button>
-        {msgError ? (
-          <p className="text-danger mt-3">{msgError}</p>
-        ) : (
-          <span></span>
-        )}
+        {error ? <p className="text-danger mt-3">{error}</p> : <span></span>}
       </div>
       <div className="col"></div>
     </div>

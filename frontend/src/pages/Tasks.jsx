@@ -11,23 +11,25 @@ function Tasks() {
   const { folder } = useParams();
 
   const getTasks = async () => {
-    axios
+    setError("");
+
+    await axios
       .get(`http://localhost:3001/api/stories/${folder}`)
       .then(
         (res) =>
-          Object.keys(res.data).length > 0 ? setTasks(res.data) : setTasks([]) // If it's empty tasks will be equal to []
+          Object.keys(res.data).length > 0 ? setTasks(res.data) : setTasks([]) // If it's empty, tasks will be equal to []
       )
-      .catch((e) => console.log(e));
+      .catch((e) => setError("ERROR GETTING TASKS"));
   };
 
   useEffect(() => {
     const getTasks = async () => {
-      axios
+      await axios
         .get(`http://localhost:3001/api/stories/${folder}`)
         .then((res) =>
           Object.keys(res.data).length > 0 ? setTasks(res.data) : setTasks([])
         )
-        .catch((e) => console.log(e));
+        .catch((e) => setError("ERROR GETTING TASKS"));
     };
     getTasks();
   }, [folder]);
@@ -43,6 +45,8 @@ function Tasks() {
   };
 
   const createTask = async (e) => {
+    setError("");
+
     e.preventDefault();
     if (!newContentName.trim()) return setError("Task must have a name");
 
@@ -57,7 +61,7 @@ function Tasks() {
       });
       await getTasks();
     } catch (e) {
-      console.log(e);
+      setError("ERROR GETTING TASKS");
     }
 
     setNewContentName("");
@@ -65,22 +69,33 @@ function Tasks() {
   };
 
   const deleteTask = async (taskId) => {
-    axios.delete(`http://localhost:3001/api/stories/${folder}/${taskId}`, {
-      taskId,
-    });
+    setError("");
 
-    await getTasks();
+    try {
+      axios.delete(`http://localhost:3001/api/stories/${folder}/${taskId}`, {
+        taskId,
+      });
+      await getTasks();
+    } catch (e) {
+      setError("ERROR REMOVING TASK");
+    }
   };
 
   const toggleCheck = async (task) => {
-    axios.post(`http://localhost:3001/api/stories/${folder}/${task.id}`, {
-      content: task.content,
-      isChecked: !task.isChecked,
-      FolderId: task.FolderId,
-      taskId: task.id,
-    });
-
-    await getTasks();
+    try {
+      await axios.post(
+        `http://localhost:3001/api/stories/${folder}/${task.id}`,
+        {
+          content: task.content,
+          isChecked: !task.isChecked,
+          FolderId: task.FolderId,
+          taskId: task.id,
+        }
+      );
+      await getTasks();
+    } catch (e) {
+      setError("ERROR CHANGING CHECK");
+    }
   };
 
   return (
@@ -91,7 +106,7 @@ function Tasks() {
           <div className="col"></div>
           {/*Tasks*/}
           <div className="col-md-8">
-            <h2 className="display-4">Tasks</h2>
+            <h2 className="display-4">Folders {">"} Tasks</h2>
             <ul className="list-group mt-4">
               {tasks.length ? (
                 tasks.map((task) => (
@@ -112,7 +127,7 @@ function Tasks() {
               <input
                 onChange={(e) => setNewContentName(e.target.value)}
                 className="form-control"
-                placeholder="New Content Name"
+                placeholder="New Task Name"
                 type="text"
                 value={newContentName ? newContentName : ""}
               />

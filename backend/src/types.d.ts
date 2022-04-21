@@ -4,5 +4,3 @@ export interface Task {
   content: string
   FolderId: number
 }
-
-export type newTask = Omit<Task, 'id'>

@@ -15,9 +15,6 @@ export const TaskModel = db.define('Task', {
       notEmpty: {
         msg: 'Content cannot be empty'
       }
-    },
-    unique: {
-      msg: 'Content already used'
     }
   },
   isChecked: {

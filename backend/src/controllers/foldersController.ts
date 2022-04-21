@@ -5,14 +5,14 @@ export const getAllFolders = (_: any, res: any): void => {
   folderServices
     .getAllFolders()
     .then((data: any) => res.send(data))
-    .catch((e: any) => console.log(e))
+    .catch(() => res.sendStatus(400))
 }
 
 export const getAllFolderTasks = (req: any, res: any): void => {
   taskServices
     .getAllTasksFromFolder(+req.params.FolderId)
     .then((data: any) => res.send(data))
-    .catch((e: any) => console.log(e))
+    .catch(() => res.sendStatus(400))
 }
 
 export const addNewFolder = (req: any, res: any): void => {

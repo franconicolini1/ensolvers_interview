@@ -5,7 +5,6 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    // Cerrar sesión
     navigate("/login");
   };
 

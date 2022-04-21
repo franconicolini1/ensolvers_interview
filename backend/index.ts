@@ -1,7 +1,7 @@
 import express from 'express'
-import storiesRouter from './routes/stories'
-import { createTables } from './utils'
-import db from '../config/db'
+import storiesRouter from './src/routes/stories'
+import { createTables } from './src/utils'
+import db from './config/db'
 import cors from 'cors'
 
 const PORT = 3001

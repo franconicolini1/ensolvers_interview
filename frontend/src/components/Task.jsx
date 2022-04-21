@@ -34,7 +34,7 @@ const Task = ({ task, deleteTask, folder, toggleCheck }) => {
           )}
           <button
             className="btn btn-info float-end ml-3 my-1"
-            onClick={() => navigate(`/api/stories/${folder.id}/${task.id}`)}
+            onClick={() => navigate(`/api/stories/${folder}/${task.id}`)}
           >
             Edit
           </button>

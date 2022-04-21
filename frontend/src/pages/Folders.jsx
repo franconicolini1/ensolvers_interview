@@ -9,24 +9,28 @@ function Folders() {
   const [error, setError] = useState("");
 
   const getFolders = async () => {
-    axios
+    setError("");
+
+    await axios
       .get("http://localhost:3001/api/stories")
       .then((res) =>
         Object.keys(res.data).length > 0 ? setFolders(res.data) : setFolders([])
       )
-      .catch((e) => console.log(e));
+      .catch(() => setError("ERROR GETTING FOLDERS"));
   };
 
   useEffect(() => {
+    setError("");
+
     const getFolders = async () => {
-      axios
+      await axios
         .get("http://localhost:3001/api/stories")
         .then((res) =>
           Object.keys(res.data).length > 0
             ? setFolders(res.data)
             : setFolders([])
         ) // If it's empty folders will be equal to []
-        .catch((e) => console.log(e));
+        .catch(() => setError("ERROR GETTING FOLDERS"));
     };
     getFolders();
   }, []);
@@ -43,6 +47,7 @@ function Folders() {
 
   const createFolder = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!newFolderName.trim()) return setError("Folder must have a name");
 
@@ -57,19 +62,24 @@ function Folders() {
       });
       await getFolders();
     } catch (e) {
-      console.log(e);
+      setError("ERROR CREATING FOLDER");
     }
 
     setNewFolderName("");
     setError("");
   };
 
-  const deleteFolder = (id) => {
-    axios.delete(`http://localhost:3001/api/stories/${id}`, {
-      id,
-    });
+  const deleteFolder = async (id) => {
+    setError("");
 
-    getFolders();
+    try {
+      await axios.delete(`http://localhost:3001/api/stories/${id}`, {
+        id,
+      });
+      await getFolders();
+    } catch (e) {
+      setError("ERROR REMOVING FOLDER");
+    }
   };
 
   return (

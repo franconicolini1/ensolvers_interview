@@ -8,6 +8,7 @@ import {
 const Login = lazy(() => import("../pages/Login"));
 const Folders = lazy(() => import("../pages/Folders"));
 const Tasks = lazy(() => import("../pages/Tasks"));
+const EditTask = lazy(() => import("../pages/EditTask"));
 
 const AppRouter = () => {
   return (
@@ -18,6 +19,11 @@ const AppRouter = () => {
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/api/stories" element={<Folders />} />
             <Route exact path="/api/stories/:folder" element={<Tasks />} />
+            <Route
+              exact
+              path="/api/stories/:folder/:taskId"
+              element={<EditTask />}
+            />
             <Route path="*" element={<Navigate to="/api/stories" />} />
           </Routes>
         </Suspense>

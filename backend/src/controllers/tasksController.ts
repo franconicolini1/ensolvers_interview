@@ -1,15 +1,14 @@
 import * as taskServices from '../services/tasks'
 import { Task } from '../types'
 
-export const getTaskById = (req: any, res: any): void => {
-  const task = taskServices.findById(req.params.id)
-  task != null ? res.send(task) : res.sendStatus(404)
+export const getTaskById = async (req: any, res: any): Promise<any> => {
+  const task = await taskServices.findById(req.params.taskId)
+  task != null ? res.send(task) : res.sendStatus(400)
 }
 
 export const editTaskById = (req: any, res: any): void => {
   const { content, isChecked } = req.body
   const { taskId, FolderId } = req.params
-  console.log(isChecked)
 
   const task = {
     content,
@@ -18,11 +17,9 @@ export const editTaskById = (req: any, res: any): void => {
     FolderId
   } as unknown as Task
 
-  console.log(task.isChecked)
-
   taskServices.editTask(task)
     .then((ok) => res.send(ok))
-    .catch((e) => console.log(e))
+    .catch(() => res.sendStatus(400))
 }
 
 export const deleteTaskById = (req: any, _: any): void => {
