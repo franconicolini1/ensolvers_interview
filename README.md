@@ -7,7 +7,7 @@
 ## Run App
 
     You have to run Front-end & Back-end at the same time (first backend).
-    The app uses an external database system.
+    The app uses an external database hosting.
 
 ## Front-end
 
